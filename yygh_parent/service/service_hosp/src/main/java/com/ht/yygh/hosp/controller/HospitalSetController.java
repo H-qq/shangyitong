@@ -3,6 +3,7 @@ package com.ht.yygh.hosp.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ht.yygh.common.R;
+import com.ht.yygh.config.MD5;
 import com.ht.yygh.hosp.service.HospitalSetService;
 import com.ht.yygh.model.hosp.HospitalSet;
 import com.ht.yygh.vo.hosp.HospitalSetQueryVo;
@@ -11,7 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Random;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class HospitalSetController {
     }
 
     @ApiOperation(value = "医院分页查询")
-    @GetMapping("/findPageHospSet/{page}/{limit}")
+    @PostMapping("/findPageHospSet/{page}/{limit}")
     public R pageList(@PathVariable Integer page,@PathVariable Integer limit,@RequestBody HospitalSetQueryVo searchObj){
         QueryWrapper<HospitalSet> queryWrapper = new QueryWrapper<>();
         if (searchObj == null){
@@ -47,7 +48,7 @@ public class HospitalSetController {
             String hosname = searchObj.getHosname();
             String hoscode = searchObj.getHoscode();
             if (!StringUtils.isEmpty(hosname)){
-                queryWrapper.like("hosname",hoscode);
+                queryWrapper.like("hosname",hosname);
             }
             if (!StringUtils.isEmpty(hoscode)){
                 queryWrapper.like("hocode",hoscode);
@@ -61,5 +62,16 @@ public class HospitalSetController {
         r.data("total",total);
         r.data("rows",records);
         return R.ok().data(r.getData());
+    }
+
+    public R save(@RequestBody HospitalSet hospitalSet){
+        if (hospitalSet == null){
+            return R.error();
+        }
+        hospitalSet.setStatus(1);
+        Random random = new Random();
+        hospitalSet.setApiUrl(MD5.encrypt(System.currentTimeMillis()+""+random.nextInt(1000)));
+        boolean isSave = hospitalSetService.save(hospitalSet);
+        return  isSave ? R.ok():R.error();
     }
 }
