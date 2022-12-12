@@ -1,11 +1,14 @@
 package com.ht.yygh.model.hosp;
 
 import com.atguigu.yygh.model.base.BaseEntity;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -53,5 +56,13 @@ public class HospitalSet extends BaseEntity {
 	@TableField("status")
 	private Integer status;
 
+
+	@ApiModelProperty(value = "创建时间")
+	@TableField(fill = FieldFill.INSERT)
+	private Date creatTime;
+
+	@ApiModelProperty(value = "更新时间")
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Date updateTime;
 }
 

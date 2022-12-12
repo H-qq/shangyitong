@@ -9,6 +9,7 @@ import com.ht.yygh.model.hosp.HospitalSet;
 import com.ht.yygh.vo.hosp.HospitalSetQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,8 @@ public class HospitalSetController {
         return R.ok().data(r.getData());
     }
 
+    @ApiOperation(value = "医院设置保存")
+    @PostMapping("/saveHospitalSet")
     public R save(@RequestBody HospitalSet hospitalSet){
         if (hospitalSet == null){
             return R.error();
@@ -73,5 +76,25 @@ public class HospitalSetController {
         hospitalSet.setApiUrl(MD5.encrypt(System.currentTimeMillis()+""+random.nextInt(1000)));
         boolean isSave = hospitalSetService.save(hospitalSet);
         return  isSave ? R.ok():R.error();
+    }
+
+    @ApiOperation(value = "院设置ID查询")
+    @GetMapping("/saveHospitalSet/{id}")
+    public R getHostSet(@PathVariable Integer id){
+        if (id == 0){
+            return R.error();
+        }
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        return R.ok().data("hospitalSet",hospitalSet);
+    }
+
+    @ApiOperation(value = "修改医院设置")
+    @PostMapping("/updateHospitalSet")
+    public R updateHospitalSet(@RequestBody HospitalSet hospitalSet){
+        if (hospitalSet == null){
+            return R.error();
+        }
+        boolean isFlag = hospitalSetService.updateById(hospitalSet);
+        return isFlag ? R.ok() : R.error();
     }
 }
