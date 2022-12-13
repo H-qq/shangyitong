@@ -97,4 +97,24 @@ public class HospitalSetController {
         boolean isFlag = hospitalSetService.updateById(hospitalSet);
         return isFlag ? R.ok() : R.error();
     }
+
+    @ApiOperation(value = "锁定医院设置")
+    @PutMapping("/lockHospitalSet/{id}/{status}")
+    public R lockHospitalSet(@PathVariable Integer id,@PathVariable Integer status){
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        hospitalSet.setStatus(status);
+        boolean isFlag = hospitalSetService.updateById(hospitalSet);
+        return isFlag?R.ok():R.error();
+    }
+
+
+    @ApiOperation(value = "批量删除")
+    @DeleteMapping("/batchRemoveHospSet")
+    public R batchRemoveHospSet(@RequestBody List<Integer> listIds){
+        if (listIds.size()==0){
+            return R.error();
+        }
+        hospitalSetService.removeByIds(listIds);
+        return R.ok();
+    }
 }
