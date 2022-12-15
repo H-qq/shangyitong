@@ -52,7 +52,7 @@ public class HospitalSetController {
                 queryWrapper.like("hosname",hosname);
             }
             if (!StringUtils.isEmpty(hoscode)){
-                queryWrapper.like("hocode",hoscode);
+                queryWrapper.like("hoscode",hoscode);
             }
         }
         R r = new R();

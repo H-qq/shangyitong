@@ -1,0 +1,26 @@
+package com.ht.yygh.hosp.controller;
+
+import com.ht.yygh.common.R;
+import org.springframework.web.bind.annotation.*;
+
+import static org.reflections.Reflections.log;
+
+@RestController
+@RequestMapping("/user")
+@CrossOrigin
+public class UserController {
+
+    @PostMapping("/login")
+    public R login(){
+        return R.ok().data("token","admin-token");
+    }
+
+    @GetMapping("/info")
+    public R info(String token){
+        log.info(token);
+        return R.ok().data("role","[admin]").data("introduction","I am a super administrator")
+                .data("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif")
+                .data("name","Super Admin");
+    }
+
+}

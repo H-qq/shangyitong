@@ -57,12 +57,12 @@ public class HospitalSet extends BaseEntity {
 	private Integer status;
 
 
-	@ApiModelProperty(value = "创建时间")
-	@TableField(fill = FieldFill.INSERT)
-	private Date creatTime;
-
-	@ApiModelProperty(value = "更新时间")
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Date updateTime;
+//	@ApiModelProperty(value = "创建时间")
+//	@TableField(value = "creat_time",fill = FieldFill.INSERT)
+//	private Date creatTime;
+//
+//	@ApiModelProperty(value = "更新时间")
+//	@TableField(value = "updatetime",fill = FieldFill.INSERT_UPDATE)
+//	private Date updateTime;
 }
 
